@@ -55,6 +55,15 @@ resource "aws_security_group" "default" {
   tags = "${module.label.tags}"
 }
 
+resource "aws_security_group_rule" "allow_access_out" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.default.id}"
+}
+
 #
 # ECS resources
 #
