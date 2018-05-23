@@ -1,12 +1,13 @@
 module "label" {
   source = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.3.5"
 
-  namespace   = "${var.namespace}"
-  stage       = "${var.stage}"
-  name        = "${var.name}"
-  delimiter   = "${var.delimiter}"
-  attributes  = ["${var.attributes}"]
-  tags        = "${var.tags}"
+  namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  name       = "${var.name}"
+  delimiter  = "${var.delimiter}"
+  attributes = ["${var.attributes}"]
+  tags       = "${var.tags}"
+
   additional_tag_map = {
     propagate_at_launch = "true"
   }
@@ -21,9 +22,12 @@ module "ondemand" {
   delimiter   = "${var.delimiter}"
   attributes  = ["ondemand", "${var.attributes}"]
   tags        = "${var.tags}"
+  ec2_cluster = "${var.ec2_cluster}"
+
   additional_tag_map = {
     propagate_at_launch = "true"
   }
+
   vpc_id                    = "${var.vpc_id}"
   cloud_config_content_type = "${var.cloud_config_content_type}"
   cloud_config_content      = "${var.cloud_config_content}"
@@ -42,15 +46,14 @@ module "ondemand" {
   security_group_id         = "${aws_security_group.default.id}"
   cluster_name              = "${aws_ecs_cluster.default.name}"
   instance_profile_name     = "${aws_iam_instance_profile.default.name}"
-
 }
-
 
 #
 # Security group resources
 #
 resource "aws_security_group" "default" {
-  vpc_id = "${var.vpc_id}"
+  vpc_id      = "${var.vpc_id}"
+  name_prefix = "${module.label.id}"
 
   tags = "${module.label.tags}"
 }

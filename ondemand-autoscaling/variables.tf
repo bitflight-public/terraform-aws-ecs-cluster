@@ -33,12 +33,15 @@ variable "additional_tag_map" {
   default     = {}
   description = "Additional tags for appending to each tag map."
 }
-variable "cluster_name" {
 
+variable "ec2_cluster" {
+  description = "create a cluster using ec2 asg"
+  default     = "true"
 }
-variable "instance_profile_name" {
-  
-}
+
+variable "cluster_name" {}
+
+variable "instance_profile_name" {}
 
 variable "security_group_id" {
   default = ""
@@ -140,7 +143,6 @@ variable "low_cpu_evaluation_periods" {
 variable "low_cpu_period_seconds" {
   default = "300"
 }
-
 
 variable "low_cpu_threshold_percent" {
   default = "10"

@@ -34,6 +34,10 @@ variable "additional_tag_map" {
   description = "Additional tags for appending to each tag map."
 }
 
+variable "ec2_cluster" {
+  description = "create a cluster using ec2 asg"
+  default     = "true"
+}
 
 variable "vpc_id" {}
 
